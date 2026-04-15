@@ -50,11 +50,11 @@ function qty_buttons_astra_script() {
         }
         .qty-minus {
             border-radius: 4px 0 0 4px;
-            order: -1; /* Siempre antes del input */
+            order: -1;
         }
         .qty-plus {
             border-radius: 0 4px 4px 0;
-            order: 1; /* Siempre después del input */
+            order: 1; 
         }
 
         /* Input de cantidad */
@@ -80,24 +80,24 @@ function qty_buttons_astra_script() {
     (function() {
         'use strict';
 
-        // Inyectar botones en todos los campos de cantidad presentes
+        // Agregar botones en todos los campos de cantidad presentes
         function inyectarBotones() {
             document.querySelectorAll('.quantity').forEach(function(wrapper) {
                 // Evitar duplicados
                 if (wrapper.querySelector('.qty-btn')) return;
 
-                var input = wrapper.querySelector('input.qty, input[type="number"]');
+                let input = wrapper.querySelector('input.qty, input[type="number"]');
                 if (!input) return;
 
                 // Botón MENOS
-                var btnMenos = document.createElement('button');
+                let btnMenos = document.createElement('button');
                 btnMenos.type        = 'button';
                 btnMenos.className   = 'qty-btn qty-minus';
                 btnMenos.setAttribute('aria-label', 'Reducir cantidad');
                 btnMenos.innerHTML   = '&#8722;'; // signo −
 
                 // Botón MÁS
-                var btnMas = document.createElement('button');
+                let btnMas = document.createElement('button');
                 btnMas.type        = 'button';
                 btnMas.className   = 'qty-btn qty-plus';
                 btnMas.setAttribute('aria-label', 'Aumentar cantidad');
@@ -110,23 +110,23 @@ function qty_buttons_astra_script() {
 
         // Manejar clicks en los botones
         document.body.addEventListener('click', function(e) {
-            var btn = e.target.closest('.qty-btn');
+            let btn = e.target.closest('.qty-btn');
             if (!btn) return;
 
-            var wrapper = btn.closest('.quantity');
+            let wrapper = btn.closest('.quantity');
             if (!wrapper) return;
 
-            var input = wrapper.querySelector('input.qty, input[type="number"]');
+            let input = wrapper.querySelector('input.qty, input[type="number"]');
             if (!input) return;
 
-            var current = parseFloat(input.value) || 0;
-            var step    = parseFloat(input.getAttribute('step'))  || 1;
-            var min     = parseFloat(input.getAttribute('min'));
-            var max     = parseFloat(input.getAttribute('max'));
+            let current = parseFloat(input.value) || 0;
+            let step    = parseFloat(input.getAttribute('step'))  || 1;
+            let min     = parseFloat(input.getAttribute('min'));
+            let max     = parseFloat(input.getAttribute('max'));
 
             if (isNaN(min)) min = 0;
 
-            var newVal;
+            let newVal;
             if (btn.classList.contains('qty-plus')) {
                 newVal = (!isNaN(max) && current + step > max) ? max : current + step;
             } else {
@@ -151,7 +151,7 @@ function qty_buttons_astra_script() {
         document.body.addEventListener('updated_wc_div',           inyectarBotones);
 
         // Fallback: observar cambios en el DOM por si Astra renderiza tarde
-        var observer = new MutationObserver(function(mutations) {
+        let observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(m) {
                 m.addedNodes.forEach(function(node) {
                     if (node.nodeType === 1) {
